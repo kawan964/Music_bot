@@ -1,2 +1,30 @@
-      - name: Run Bot
+name: Music Bot
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt update
+          sudo apt install ffmpeg -y
+
+      - name: Install Python Requirements
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Music Bot
         run: python bot.py
